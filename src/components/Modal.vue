@@ -3,8 +3,11 @@
         <div class="modal-background"></div>
         <div class="modal-dialog">
             <div class="modal-dialog__container">
-                <input v-model="location" @input="validate">
-                <div class="error">{{this.error}}</div>
+                <form class="modal-dialog__form">
+                    <label>Enter City Name</label>
+                    <input v-model="location" @input="validate">
+                    <div class="error">{{this.error}}</div>
+                </form>
             </div>
             <div class="modal-dialog__actions">
                 <ui-btn :disabled="!valid" @click="addLocation">ADD</ui-btn>
@@ -16,8 +19,8 @@
 
 <script>
     import uiBtn from './UI/uiBtn.vue'
-    import { required, helpers } from "vuelidate/lib/validators";
-    const alpha = helpers.regex("alpha", /^[a-zA-Z]+$/);
+    import {required, helpers} from "vuelidate/lib/validators";
+    const alpha = helpers.regex("alpha", /^[a-zA-Z/-]+$/);
 
     export default {
         name: 'Modal',
@@ -61,9 +64,9 @@
                     })
             },
             close() {
-                this.location='';
-                this.valid=false;
-                this.error='';
+                this.location = '';
+                this.valid = false;
+                this.error = '';
                 this.$emit('close');
             },
         }
@@ -95,18 +98,41 @@
 
         &-dialog {
             width: 320px;
-            height: 200px;
+            height: 393px;
             padding: 24px;
             text-align: left;
             background-color: #fff;
-            border: 1px solid #C4C4C4;
-            box-shadow: 0px 2px 10px rgba(10, 10, 10, 0.25);
-            border-radius: 6px;
             opacity: 1;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+
+            border: 1px solid #C4C4C4;
+            box-shadow: 0px 2px 10px rgba(10, 10, 10, 0.25);
+            border-radius: 6px;
+
+            &__form {
+                margin: 80px 0;
+                label {
+                    font-size: 20px;
+                }
+                input {
+                    font-size: 20px;
+                    color: #1B1B1B;
+                    padding: 5px;
+                    border: 1px solid #C4C4C4;
+                    outline: none;
+                    width: 100%;
+                    height: 48px;
+                    margin: 16px 0 16px;
+                }
+                .error {
+                    height: 32px;
+                    color: red;
+                    font-size: 20px;
+                }
+            }
 
             &__actions {
                 display: flex;
@@ -116,20 +142,22 @@
         }
     }
 
-    input {
-        font-size: 20px;
-        color: #1B1B1B;
-        padding: 5px;
-        border: 1px solid #ddd;
+    @media screen and (min-width: 480px) {
+        .modal-dialog {
+            width: 420px;
+        }
+    }
 
-        width: 100%;
-        height: 48px;
-        margin: 28px 0 0;
+    @media screen and (min-width: 756px) {
+        .modal-dialog {
+            width: 600px;
+        }
     }
-    .error {
-        height: 16px;
-        color: red;
-        font-size: 16px;
-        margin-bottom: 28px
+
+    @media screen and (min-width: 960px) {
+        .modal-dialog {
+            width: 800px;
+        }
     }
+
 </style>

@@ -3,12 +3,15 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex);
 
-const weather_url = process.env.VUE_APP_WEATHER_SERVICE_URL
-const weather_key = process.env.VUE_APP_WEATHER_SERVICE_KEY
+const weatherUrl = process.env.VUE_APP_WEATHER_SERVICE_URL
+const weatherKey = process.env.VUE_APP_WEATHER_SERVICE_KEY
+const currentLocation = process.env.VUE_APP_CURRENT_LOCATION
 
-export default new Vuex.Store({
+const storedLocations = JSON.parse(localStorage.getItem('weather-items') || '[]')
+
+const store =  new Vuex.Store({
     state: {
-        locations: JSON.parse(localStorage.getItem('weather-items') || '[]')
+        locations: storedLocations
     },
     getters: {
         LOCATIONS: state => {
@@ -22,7 +25,7 @@ export default new Vuex.Store({
     },
     actions: {
         SET: async (context, payload) => {
-            const url = `${weather_url}?q=${payload}&units=metric&appid=${weather_key}`
+            const url = `${weatherUrl}?q=${payload}&units=metric&appid=${weatherKey}`
             return fetch(url)
                 .then(response => {
                     if (response.status == 200) {
@@ -46,3 +49,10 @@ export default new Vuex.Store({
         }
     }
 })
+
+export default store;
+
+if (!storedLocations.find(item => item.name === currentLocation)) {
+   store.dispatch('SET', currentLocation)
+}
+

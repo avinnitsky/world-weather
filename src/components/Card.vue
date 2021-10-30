@@ -80,9 +80,9 @@
 
 <style lang="scss" scoped>
     .card {
-        min-width: 350px;
+        max-width: 350px;
+        min-width: 200px;
         height: 393px;
-        margin: 0 12px 24px;
         padding: 24px;
         text-align: left;
         border: 1px solid #C4C4C4;
@@ -136,10 +136,16 @@
     @media screen and (max-width: 750px) {
         .card {
             &_main {
-                margin: 0 12px 24px;
-                flex-grow: 0;
+                margin-bottom: 24px;
             }
         }
     }
+
+    @media screen and (max-width: 480px) {
+        .card {
+            max-width: none;
+        }
+    }
+
 
 </style>

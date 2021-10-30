@@ -3,8 +3,8 @@
         <div class="app__container">
             <h1 class="app__title">World Weather</h1>
             <h2 class="app__subtitle">Watch weather in your current location</h2>
-            <div class="cards-wrapper">
-                <card v-if="items.length" :item="items[0]" main></card>
+            <div v-if="currentLocationItem">
+                <card :item="currentLocationItem" main></card>
             </div>
             <div class="cards-wrapper">
                 <card
@@ -39,7 +39,12 @@
         },
         computed: {
             items() {
-                return this.$store.getters.LOCATIONS
+                const currentLocation = process.env.VUE_APP_CURRENT_LOCATION
+                return this.$store.getters.LOCATIONS.filter(item => item.name != currentLocation)
+            },
+            currentLocationItem() {
+                const currentLocation = process.env.VUE_APP_CURRENT_LOCATION
+                return this.$store.getters.LOCATIONS.find(item => item.name == currentLocation)
             }
         }
     }
@@ -68,7 +73,7 @@
         &__container {
             margin: 0 auto;
             min-width: 350px;
-            max-width: 1600px;
+            max-width: 1400px;
         }
 
         &__title {
@@ -89,7 +94,7 @@
 
     @media screen and (max-width: 756px) {
         .app {
-            margin: 4px;
+            margin: 16px;
             &__title {
                 font-size: 48px;
                 margin-bottom: 0;
@@ -99,11 +104,37 @@
             }
         }
     }
+    @media screen and (max-width: 360px) {
+        .app {
+            margin: 5px;
+        }
+    }
 
     .cards-wrapper {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 24px;
+    }
+
+    @media screen and (max-width: 960px) {
+        .cards-wrapper {
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 24px;
+        }
+    }
+
+    @media screen and (max-width: 756px) {
+        .cards-wrapper {
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 12px;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .cards-wrapper {
+            grid-template-columns: 1fr;
+            grid-gap: 12px;
+        }
     }
 
     .add-btn-wrapper {
