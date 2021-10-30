@@ -12,7 +12,7 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .btn {
         font-weight: bold;
         font-size: 16px;
@@ -21,9 +21,16 @@
         cursor: pointer;
         background: transparent;
         border: none;
+        transition: all 0.3s;
+        &:hover {
+            transform: scale(1.2);
+        }
+        &:active {
+            transform: scale(1);
+        }
+        &:disabled {
+            opacity: 0.5;
+        }
     }
 
-    button:disabled {
-        opacity: 0.5;
-    }
 </style>

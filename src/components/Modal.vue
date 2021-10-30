@@ -3,11 +3,11 @@
         <div class="modal-background"></div>
         <div class="modal-dialog">
             <div class="modal-dialog__container">
-                <form class="modal-dialog__form">
+                <div class="modal-dialog__form">
                     <label>Enter City Name</label>
                     <input v-model="location" @input="validate">
                     <div class="error">{{this.error}}</div>
-                </form>
+                </div>
             </div>
             <div class="modal-dialog__actions">
                 <ui-btn :disabled="!valid" @click="addLocation">ADD</ui-btn>

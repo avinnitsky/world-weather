@@ -3,11 +3,10 @@
 </template>
 
 <script>
-    export default {
-    }
+    export default {}
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .btn {
         width: 56px;
         height: 56px;
@@ -18,5 +17,9 @@
         line-height: 56px;
         color: #fff;
         cursor: pointer;
+        transition: all 0.3s;
+        &:hover {
+            transform: scale(1.2);
+        }
     }
 </style>
