@@ -13,11 +13,13 @@
 </script>
 
 <style lang="scss" scoped>
+    @import '../../scss/common';
+
     .btn {
         font-weight: bold;
         font-size: 16px;
         line-height: 24px;
-        color: #9B51E0;
+        color: $btn-color;
         cursor: pointer;
         background: transparent;
         border: none;

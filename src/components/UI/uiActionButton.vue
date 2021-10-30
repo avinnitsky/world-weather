@@ -7,10 +7,12 @@
 </script>
 
 <style lang="scss" scoped>
+    @import "../../scss/common";
+
     .btn {
         width: 56px;
         height: 56px;
-        background: #9B51E0;
+        background: $btn-color;
         box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.14), 0px 1px 10px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.2);
         border-radius: 50px;
         font-size: 24px;

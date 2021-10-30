@@ -52,6 +52,7 @@
 
 <style lang="scss">
     @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+    @import "./scss/common";
 
     * {
         box-sizing: border-box;
@@ -66,7 +67,7 @@
     .app {
         font-family: 'Lato', sans-serif;
         font-weight: 400;
-        color: #1B1B1B;
+        color: $text-primary;
         text-align: center;
         margin: 24px;
 
@@ -87,7 +88,7 @@
             font-size: 24px;
             font-weight: normal;
             line-height: 24px;
-            color: #767676;
+            color: $text-secondary;
             margin-bottom: 20px;
         }
     }

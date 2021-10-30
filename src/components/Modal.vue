@@ -74,6 +74,8 @@
 </script>
 
 <style lang="scss" scoped>
+    @import "../scss/common";
+
     .modal {
         top: 0;
         left: 0%;
@@ -119,7 +121,7 @@
                 }
                 input {
                     font-size: 20px;
-                    color: #1B1B1B;
+                    color: $text-primary;
                     padding: 5px;
                     border: 1px solid #C4C4C4;
                     outline: none;
