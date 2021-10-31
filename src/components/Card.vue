@@ -1,20 +1,24 @@
 <template>
     <div class="card">
-        <div class="card__title">{{ location.city }}</div>
-        <div class="card__subtitle">{{ location.country }}</div>
-        <div class="card__row">
-            <div>Wheater</div>
-            <div>{{ weather }}</div>
+        <div>
+            <div class="card__title">{{ location.city }}</div>
+            <div class="card__subtitle">{{ location.country }}</div>
         </div>
-        <div class="card__row">
-            <div>Temperature</div>
-            <div>{{temp}} °C</div>
+        <div>
+            <div class="card__row">
+                <div>Wheater</div>
+                <div>{{ weather }}</div>
+            </div>
+            <div class="card__row">
+                <div>Temperature</div>
+                <div>{{temp}} °C</div>
+            </div>
+            <div class="card__row">
+                <div>Humidity</div>
+                <div>{{ humidity }} %</div>
+            </div>
+            <div class="card__timer">{{ timer }}</div>
         </div>
-        <div class="card__row">
-            <div>Humidity</div>
-            <div>{{ humidity }} %</div>
-        </div>
-        <div class="card__timer">{{ timer }}</div>
         <div class="card__actions">
             <ui-btn @click="reload">RELOAD</ui-btn>
             <ui-btn v-if="!main" @click="$store.dispatch('REMOVE', item)">REMOVE</ui-btn>
@@ -88,6 +92,9 @@
         border: 1px solid #C4C4C4;
         box-shadow: 0px 2px 10px rgba(10, 10, 10, 0.25);
         border-radius: 6px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
 
         &_main {
             max-width: 824px;
@@ -105,7 +112,7 @@
         &__subtitle {
             font-size: 18px;
             line-height: 24px;
-            margin-bottom: 40px;
+            margin-bottom: 8px;
         }
 
         &__row {
@@ -123,7 +130,7 @@
             line-height: 24px;
             text-align: right;
             color: #A8A8A8;
-            margin: -8px 0 32px;
+            margin: -8px 0 0px;
         }
 
         &__actions {
