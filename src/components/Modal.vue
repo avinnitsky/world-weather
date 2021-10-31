@@ -6,7 +6,13 @@
                 <div class="modal-dialog__title">Choose a city</div>
                 <div class="modal-dialog__subtitle">To find city start typing and pick one from the suggestions</div>
             </div>
-            <ui-input v-model="location" @input="validate" :class="{invalid: !valid}"></ui-input>
+            <ui-input
+                    v-model="location"
+                    @input="validate"
+                    placeholder="Search city"
+                    error-message="Choose a city"
+                    :class="{invalid: !valid}"
+            ></ui-input>
             <div class="modal-dialog__actions">
                 <ui-btn @click="clear" :disabled="!location">CLEAR</ui-btn>
                 <div class="btn-group">

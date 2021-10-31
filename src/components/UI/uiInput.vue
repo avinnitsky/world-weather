@@ -1,14 +1,16 @@
 <template>
     <div>
-        <input class="input" @input="$emit('input', modelValue)" v-model="modelValue" placeholder="Search city">
-        <div class="error-message">Choose a city</div>
+        <input class="input" @input="$emit('input', modelValue)" v-model="modelValue" :placeholder="placeholder">
+        <div class="error-message">{{ errorMessage }}</div>
     </div>
 </template>
 
 <script>
     export default {
         props: {
-            value: String
+            value: String,
+            placeholder: String,
+            errorMessage: String,
         },
         data() {
             return {
