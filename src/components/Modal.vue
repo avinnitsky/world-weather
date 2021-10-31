@@ -2,16 +2,17 @@
     <div class="modal">
         <div class="modal-background"></div>
         <div class="modal-dialog">
-            <div class="modal-dialog__container">
-                <div class="modal-dialog__form">
-                    <label>Enter City Name</label>
-                    <input v-model="location" @input="validate">
-                    <div class="error">{{this.error}}</div>
-                </div>
+            <div>
+                <div class="modal-dialog__title">Choose a city</div>
+                <div class="modal-dialog__subtitle">To find city start typing and pick one from the suggestions</div>
             </div>
+            <ui-input v-model="location" @input="validate" :class="{invalid: !valid}"></ui-input>
             <div class="modal-dialog__actions">
-                <ui-btn :disabled="!valid" @click="addLocation">ADD</ui-btn>
-                <ui-btn @click="close">CANCEL</ui-btn>
+                <ui-btn @click="clear" :disabled="!location">CLEAR</ui-btn>
+                <div class="btn-group">
+                    <ui-btn @click="close">CANCEL</ui-btn>
+                    <ui-btn :disabled="!location || !valid" @click="addLocation">ADD</ui-btn>
+                </div>
             </div>
         </div>
     </div>
@@ -19,13 +20,15 @@
 
 <script>
     import uiBtn from './UI/uiBtn.vue'
+    import uiInput from './UI/uiInput.vue'
     import {required, helpers} from "vuelidate/lib/validators";
-    const alpha = helpers.regex("alpha", /^[a-zA-Z/-]+$/);
+    const alpha = helpers.regex("alpha", /^[a-zA-Z]+$/);
 
     export default {
         name: 'Modal',
         components: {
-            uiBtn
+            uiBtn,
+            uiInput
         },
         props: {
             active: Boolean
@@ -33,8 +36,7 @@
         data() {
             return {
                 location: '',
-                valid: false,
-                error: ''
+                valid: true,
             }
         },
         validations: {
@@ -46,11 +48,11 @@
         watch: {
             active(val) {
                 val ? this.$el.classList.add('modal_active') : this.$el.classList.remove('modal_active')
+                val && this.$el.querySelector('input').focus()
             }
         },
         methods: {
             validate() {
-                this.error = ''
                 this.valid = !this.$v.$invalid
             },
             addLocation() {
@@ -60,14 +62,17 @@
                     })
                     .catch(e => {
                         console.log(e);
-                        this.error = e
+                        this.valid = false
                     })
             },
             close() {
                 this.location = '';
-                this.valid = false;
-                this.error = '';
+                this.valid = true;
                 this.$emit('close');
+            },
+            clear() {
+                this.location = '';
+                this.valid = true;
             },
         }
     }
@@ -75,6 +80,14 @@
 
 <style lang="scss" scoped>
     @import "../scss/common";
+
+    .btn-group {
+        display: flex;
+        justify-content: space-between;
+        > button:not(:last-child) {
+            margin-right: 30px;
+        }
+    }
 
     .modal {
         top: 0;
@@ -90,7 +103,7 @@
 
         &-background {
             position: absolute;
-            background-color: #000;
+            background-color: #0B0B0B;
             opacity: 0.5;
             width: 100vw;
             height: 100vh;
@@ -99,11 +112,14 @@
         }
 
         &-dialog {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             width: 320px;
-            height: 393px;
+            height: 397px;
             padding: 24px;
             text-align: left;
-            background-color: #fff;
+            background-color: #ffffff;
             opacity: 1;
             position: absolute;
             top: 50%;
@@ -114,31 +130,19 @@
             box-shadow: 0px 2px 10px rgba(10, 10, 10, 0.25);
             border-radius: 6px;
 
-            &__form {
-                margin: 80px 0;
-                label {
-                    font-size: 20px;
-                }
-                input {
-                    font-size: 20px;
-                    color: $text-primary;
-                    padding: 5px;
-                    border: 1px solid #C4C4C4;
-                    outline: none;
-                    width: 100%;
-                    height: 48px;
-                    margin: 16px 0 16px;
-                }
-                .error {
-                    height: 32px;
-                    color: red;
-                    font-size: 20px;
-                }
+            &__title {
+                font-weight: bold;
+                font-size: 32px;
+                margin-bottom: 16px;
+            }
+
+            &__subtitle {
+                color: $text-secondary;
+                font-size: 24px;
             }
 
             &__actions {
                 display: flex;
-                flex-direction: row-reverse;
                 justify-content: space-between;
             }
         }
@@ -152,13 +156,13 @@
 
     @media screen and (min-width: 756px) {
         .modal-dialog {
-            width: 600px;
+            width: 500px;
         }
     }
 
     @media screen and (min-width: 960px) {
         .modal-dialog {
-            width: 800px;
+            width: 751px;
         }
     }
 

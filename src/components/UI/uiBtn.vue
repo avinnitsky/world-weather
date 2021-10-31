@@ -31,7 +31,7 @@
             transform: scale(1);
         }
         &:disabled {
-            opacity: 0.5;
+            color: #C1C1C1;
         }
     }
 
