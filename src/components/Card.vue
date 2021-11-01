@@ -41,19 +41,13 @@
         },
         data() {
             return {
-                timer: ''
+                timer: this.timerString()
             }
         },
         mounted() {
             if (this.main) {
                 this.$el.classList.add('card_main')
             }
-            let timestamp = this.item.dt * 1000
-            this.timer = moment(timestamp).fromNow()
-            setInterval(() => {
-                let timestamp = this.item.dt * 1000
-                this.timer = moment(timestamp).fromNow()
-            }, 1000)
         },
         computed: {
             classlist() {
@@ -76,9 +70,20 @@
         },
         methods: {
             reload() {
-                this.$store.dispatch('SET', this.item.name)
+                this.$store.dispatch('SET', this.item.name).then(() => {
+                    this.timer = this.timerString()
+                })
+            },
+            timerString() {
+                let timestamp = this.item.dt * 1000
+                return moment(timestamp).fromNow()
             }
         },
+        watch: {
+            "$store.getters.NOW"() {
+                this.timer = this.timerString()
+            }
+        }
     }
 </script>
 

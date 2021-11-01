@@ -11,16 +11,23 @@ const storedLocations = JSON.parse(localStorage.getItem('weather-items') || '[]'
 
 const store =  new Vuex.Store({
     state: {
-        locations: storedLocations
+        locations: storedLocations,
+        now: Date.now()
     },
     getters: {
         LOCATIONS: state => {
             return state.locations;
         },
+        NOW: state => {
+            return state.now;
+        },
     },
     mutations: {
         LOCATIONS: (state, payload) => {
             state.locations = payload;
+        },
+        NOW: (state, payload) => {
+            state.now = payload;
         },
     },
     actions: {
@@ -46,6 +53,11 @@ const store =  new Vuex.Store({
             let locations = context.getters.LOCATIONS.filter(item => item.id != payload.id)
             context.commit('LOCATIONS', locations);
             localStorage.setItem('weather-items', JSON.stringify(context.getters.LOCATIONS))
+        },
+        INTERVAL: async (context) => {
+            setInterval(() => {
+                context.commit('NOW', Date.now())
+            }, 1000*60)
         }
     }
 })
@@ -55,4 +67,6 @@ export default store;
 if (!storedLocations.find(item => item.name === currentLocation)) {
    store.dispatch('SET', currentLocation)
 }
+
+store.dispatch('INTERVAL')
 
