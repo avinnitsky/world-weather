@@ -1,6 +1,11 @@
 <template>
     <div>
-        <input class="input" @input="$emit('input', modelValue)" v-model="modelValue" :placeholder="placeholder">
+        <input class="input"
+               @input="$emit('input', modelValue)"
+               @keypress.enter="$emit('enter', modelValue)"
+               v-model="modelValue"
+               :placeholder="placeholder"
+        >
         <div class="error-message">{{ errorMessage }}</div>
     </div>
 </template>

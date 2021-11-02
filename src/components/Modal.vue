@@ -9,6 +9,7 @@
             <ui-input
                     v-model="location"
                     @input="validate"
+                    @enter="addLocation"
                     placeholder="Search city"
                     error-message="Choose a city"
                     :class="{invalid: !valid}"
@@ -62,6 +63,9 @@
                 this.valid = !this.$v.$invalid
             },
             addLocation() {
+                if (!this.location || !this.valid) {
+                    return
+                }
                 this.$store.dispatch('SET', this.location)
                     .then(() => {
                         this.close()
